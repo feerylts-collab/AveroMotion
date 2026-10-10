@@ -189,79 +189,161 @@ static bool PrimaryButton(const char* label, ImVec2 size) {
 }
 static void DrawHome() {
     ImGuiIO& io = ImGui::GetIO();
-    ImGui::SetNextWindowPos(ImVec2(0, 0)); ImGui::SetNextWindowSize(io.DisplaySize);
-    ImGui::Begin("Home", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove |
+    ImGui::SetNextWindowPos(ImVec2(0, 0));
+    ImGui::SetNextWindowSize(io.DisplaySize);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+    ImGui::Begin("Home", nullptr,
+        ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove |
         ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoBringToFrontOnFocus);
-    ImGui::SetCursorPos(ImVec2(48, 34));
-    ImGui::TextColored(ImVec4(0.65f, 0.60f, 1.0f, 1), "A V E R O");
-    ImGui::SameLine(0, 12); ImGui::TextDisabled("M O T I O N");
-    ImGui::SameLine(); ImGui::SetCursorPosX(io.DisplaySize.x - 160);
-    ImGui::TextDisabled("MOTION STUDIO  /  01");
-    float contentWidth = (std::min)(920.0f, io.DisplaySize.x - 96.0f);
-    ImGui::SetCursorPos(ImVec2((io.DisplaySize.x - contentWidth) * 0.5f, 130));
-    ImGui::BeginChild("Welcome", ImVec2(contentWidth, 180), false);
-    if (g_fontLarge) ImGui::PushFont(g_fontLarge);
-    ImGui::TextUnformatted("Make something");
-    ImGui::SameLine(0, 8); ImGui::TextColored(ImVec4(0.62f, 0.56f, 1.0f, 1), "move.");
-    if (g_fontLarge) ImGui::PopFont();
-    ImGui::Spacing();
-    ImGui::TextColored(ImVec4(0.58f, 0.62f, 0.71f, 1), "A focused workspace for motion design, compositing and video.");
+
+    const ImVec4 accent(0.38f, 0.57f, 0.92f, 1.0f);
+    const ImVec4 muted(0.52f, 0.56f, 0.64f, 1.0f);
+    const float sidebarWidth = 218.0f;
+    const float topBarHeight = 58.0f;
+
+    // Fixed application header.
+    ImGui::PushStyleVar(ImGuiStyleVar_ChildRounding, 0.0f);
+    ImGui::PushStyleVar(ImGuiStyleVar_ChildBorderSize, 0.0f);
+    ImGui::BeginChild("AppHeader", ImVec2(0, topBarHeight), false);
+    ImGui::SetCursorPos(ImVec2(22, 18));
+    ImGui::TextColored(accent, "AVERO");
+    ImGui::SameLine(0, 7);
+    ImGui::TextUnformatted("MOTION");
+    ImGui::SameLine();
+    ImGui::SetCursorPosX(io.DisplaySize.x - 170.0f);
+    ImGui::TextColored(muted, "MOTION STUDIO");
     ImGui::EndChild();
-    ImGui::SetCursorPos(ImVec2((io.DisplaySize.x - contentWidth) * 0.5f, 330));
-    ImGui::BeginChild("Actions", ImVec2(contentWidth, 220), true);
-    ImGui::TextDisabled("GET STARTED"); ImGui::Spacing();
-    float cardW = (contentWidth - 64.0f) * 0.5f;
-    ImGui::BeginChild("NewProjectCard", ImVec2(cardW, 142), true);
-    ImGui::TextColored(ImVec4(0.66f, 0.61f, 1.0f, 1), "+  NEW PROJECT");
-    ImGui::Spacing(); ImGui::TextWrapped("Start with a clean canvas and choose your format.");
-    ImGui::SetCursorPosY(85);
-    if (PrimaryButton("Create a project  ->", ImVec2(-1, 38))) {
-        g_statusMessage.clear(); g_showCreateProject = true; ImGui::OpenPopup("Create project");
+    ImGui::PopStyleVar(2);
+
+    ImGui::GetWindowDrawList()->AddLine(
+        ImVec2(0, topBarHeight), ImVec2(io.DisplaySize.x, topBarHeight),
+        IM_COL32(43, 48, 59, 255), 1.0f);
+
+    // Navigation rail.
+    ImGui::SetCursorPos(ImVec2(0, topBarHeight + 1.0f));
+    ImGui::BeginChild("Navigation", ImVec2(sidebarWidth, -1), false);
+    ImGui::SetCursorPos(ImVec2(18, 24));
+    ImGui::TextColored(muted, "WORKSPACE");
+    ImGui::SetCursorPosX(12);
+    if (ImGui::Button("  Projects", ImVec2(sidebarWidth - 24, 38))) {}
+    ImGui::SetCursorPosX(12);
+    if (ImGui::Button("  Settings", ImVec2(sidebarWidth - 24, 38))) {
+        g_statusMessage = "Settings are not available yet.";
     }
-    ImGui::EndChild(); ImGui::SameLine();
-    ImGui::BeginChild("OpenProjectCard", ImVec2(0, 142), true);
-    ImGui::TextColored(ImVec4(0.55f, 0.77f, 0.95f, 1), "↗  OPEN PROJECT");
-    ImGui::Spacing(); ImGui::TextWrapped("Continue working on an existing .avero project.");
-    ImGui::SetCursorPosY(85);
-    if (ImGui::Button("Browse project folder  ->", ImVec2(-1, 38))) BrowseProjectFolder();
+    ImGui::SetCursorPos(ImVec2(18, 132));
+    ImGui::TextColored(muted, "CREATE");
+    ImGui::SetCursorPos(ImVec2(12, 158));
+    if (ImGui::Button("+   New project", ImVec2(sidebarWidth - 24, 40))) {
+        g_statusMessage.clear();
+        g_showCreateProject = true;
+        ImGui::OpenPopup("Create project");
+    }
+    ImGui::SetCursorPos(ImVec2(18, ImGui::GetWindowHeight() - 38));
+    ImGui::TextColored(muted, "EARLY ACCESS");
     ImGui::EndChild();
+
+    ImGui::GetWindowDrawList()->AddLine(
+        ImVec2(sidebarWidth, topBarHeight), ImVec2(sidebarWidth, io.DisplaySize.y),
+        IM_COL32(43, 48, 59, 255), 1.0f);
+
+    // Main content: restrained heading, direct actions, and recent projects.
+    ImGui::SetCursorPos(ImVec2(sidebarWidth + 36.0f, topBarHeight + 28.0f));
+    ImGui::BeginChild("HomeContent", ImVec2(io.DisplaySize.x - sidebarWidth - 72.0f, -1), false);
+    ImGui::TextUnformatted("Projects");
+    ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 5.0f);
+    ImGui::TextColored(muted, "Create a project or continue where you left off.");
+    ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 22.0f);
+
+    if (ImGui::Button("New project", ImVec2(142, 38))) {
+        g_statusMessage.clear();
+        g_showCreateProject = true;
+        ImGui::OpenPopup("Create project");
+    }
+    ImGui::SameLine(0, 10);
+    if (ImGui::Button("Open project...", ImVec2(142, 38))) BrowseProjectFolder();
+
+    ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 28.0f);
+    ImGui::GetWindowDrawList()->AddLine(
+        ImGui::GetCursorScreenPos(),
+        ImVec2(ImGui::GetCursorScreenPos().x + ImGui::GetContentRegionAvail().x,
+               ImGui::GetCursorScreenPos().y),
+        IM_COL32(43, 48, 59, 255), 1.0f);
+    ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 18.0f);
+    ImGui::TextUnformatted("Recent projects");
+    ImGui::SameLine();
+    ImGui::TextColored(muted, "  No project history yet");
+
+    ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 12.0f);
+    ImGui::BeginChild("RecentList", ImVec2(0, 150), true);
+    ImGui::SetCursorPos(ImVec2(18, 18));
+    ImGui::TextColored(muted, "Projects you create will appear here.");
+    ImGui::SetCursorPos(ImVec2(18, 44));
+    ImGui::TextColored(muted, "Use Open project to select an existing project folder.");
     ImGui::EndChild();
-    ImGui::SetCursorPos(ImVec2((io.DisplaySize.x - contentWidth) * 0.5f, 585));
-    ImGui::BeginChild("RecentProjects", ImVec2(contentWidth, 115), false);
-    ImGui::TextDisabled("RECENT PROJECTS");
-    ImGui::Spacing();
-    ImGui::TextDisabled("Your recent projects will appear here as you create and open them.");
+
+    if (!g_statusMessage.empty()) {
+        ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 12.0f);
+        ImGui::TextColored(ImVec4(1.0f, 0.58f, 0.38f, 1.0f), "%s", g_statusMessage.c_str());
+    }
     ImGui::EndChild();
-    ImGui::SetCursorPos(ImVec2(48, io.DisplaySize.y - 36));
-    ImGui::TextDisabled("AVEROMOTION  •  EARLY ACCESS");
-    ImGui::SameLine(); ImGui::SetCursorPosX(io.DisplaySize.x - 190); ImGui::TextDisabled("DESIGNED TO MOVE.");
+
     if (g_showCreateProject) {
-        ImGui::SetNextWindowSize(ImVec2(560, 0), ImGuiCond_Appearing);
-        if (ImGui::BeginPopupModal("Create project", &g_showCreateProject, ImGuiWindowFlags_AlwaysAutoResize)) {
-            ImGui::TextUnformatted("Create a new project");
-            ImGui::TextDisabled("Set up your canvas. You can change things later.");
-            ImGui::Spacing(); ImGui::Separator(); ImGui::Spacing();
-            ImGui::Text("PROJECT NAME");
-            ImGui::SetNextItemWidth(-1); ImGui::InputText("##projectname", g_projectName, sizeof(g_projectName));
-            ImGui::Spacing(); ImGui::Text("LOCATION");
-            ImGui::SetNextItemWidth(-90); ImGui::InputText("##projectpath", g_projectPath, sizeof(g_projectPath));
-            ImGui::SameLine(); if (ImGui::Button("Browse...", ImVec2(82, 0))) BrowseProjectFolder();
-            ImGui::Spacing(); ImGui::Text("CANVAS PRESET");
-            const char* presets[] = { "1920 x 1080  /  Landscape", "3840 x 2160  /  4K", "1080 x 1920  /  Portrait" };
-            ImGui::SetNextItemWidth(-1); ImGui::Combo("##resolution", &g_resolution, presets, IM_ARRAYSIZE(presets));
-            ImGui::Spacing(); ImGui::Text("FRAME RATE");
+        ImGui::SetNextWindowSize(ImVec2(520, 0), ImGuiCond_Appearing);
+        if (ImGui::BeginPopupModal("Create project", &g_showCreateProject,
+                                   ImGuiWindowFlags_AlwaysAutoResize)) {
+            ImGui::TextUnformatted("New project");
+            ImGui::TextColored(muted, "Choose the project folder and canvas format.");
+            ImGui::Spacing();
+            ImGui::Separator();
+            ImGui::Spacing();
+
+            ImGui::TextUnformatted("Project name");
+            ImGui::SetNextItemWidth(-1);
+            ImGui::InputText("##projectname", g_projectName, sizeof(g_projectName));
+
+            ImGui::Spacing();
+            ImGui::TextUnformatted("Location");
+            ImGui::SetNextItemWidth(-100);
+            ImGui::InputText("##projectpath", g_projectPath, sizeof(g_projectPath));
+            ImGui::SameLine();
+            if (ImGui::Button("Browse...", ImVec2(90, 0))) BrowseProjectFolder();
+
+            ImGui::Spacing();
+            ImGui::TextUnformatted("Canvas");
+            const char* presets[] = {
+                "1920 x 1080  -  Landscape",
+                "3840 x 2160  -  UHD",
+                "1080 x 1920  -  Portrait"
+            };
+            ImGui::SetNextItemWidth(-1);
+            ImGui::Combo("##resolution", &g_resolution, presets, IM_ARRAYSIZE(presets));
+
+            ImGui::Spacing();
+            ImGui::TextUnformatted("Frame rate");
             const char* rates[] = { "24 FPS", "30 FPS", "60 FPS", "25 FPS", "50 FPS" };
-            ImGui::SetNextItemWidth(-1); ImGui::Combo("##fps", &g_frameRate, rates, IM_ARRAYSIZE(rates));
+            ImGui::SetNextItemWidth(-1);
+            ImGui::Combo("##fps", &g_frameRate, rates, IM_ARRAYSIZE(rates));
+
             if (!g_statusMessage.empty()) {
-                ImGui::Spacing(); ImGui::TextColored(ImVec4(1.0f, 0.40f, 0.40f, 1), "%s", g_statusMessage.c_str());
+                ImGui::Spacing();
+                ImGui::TextColored(ImVec4(1.0f, 0.40f, 0.40f, 1.0f), "%s", g_statusMessage.c_str());
             }
-            ImGui::Spacing(); ImGui::Separator(); ImGui::Spacing();
-            if (ImGui::Button("Create project", ImVec2(180, 40))) CreateProject();
-            ImGui::SameLine(); if (ImGui::Button("Cancel", ImVec2(110, 40))) { g_showCreateProject = false; ImGui::CloseCurrentPopup(); }
+
+            ImGui::Spacing();
+            ImGui::Separator();
+            ImGui::Spacing();
+            if (ImGui::Button("Create project", ImVec2(150, 38))) CreateProject();
+            ImGui::SameLine();
+            if (ImGui::Button("Cancel", ImVec2(100, 38))) {
+                g_showCreateProject = false;
+                ImGui::CloseCurrentPopup();
+            }
             ImGui::EndPopup();
         }
     }
+
     ImGui::End();
+    ImGui::PopStyleVar();
 }
 static void DrawWorkspace() {
     ImGuiIO& io = ImGui::GetIO();
