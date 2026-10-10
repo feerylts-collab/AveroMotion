@@ -84,7 +84,7 @@ static bool CreateProject() {
     }
     std::wstring root = Utf8ToWide(g_projectPath);
     if (root.empty()) { g_statusMessage = "Choose a project location."; return false; }
-    fs::path projectDir = fs::path(root) / fs::path(Utf8ToWide(name));
+    fs::path projectDir = fs::path(root) / fs::path(Utf8ToWide(name.c_str()));
     std::error_code ec;
     if (fs::exists(projectDir, ec)) { g_statusMessage = "A folder with this project name already exists."; return false; }
     fs::create_directories(projectDir / L"Media", ec);
