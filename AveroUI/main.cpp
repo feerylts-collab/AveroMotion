@@ -9,6 +9,8 @@
 #include <fstream>
 #include <string>
 #include <cstring>
+#include <cctype>
+#include <cstdio>
 #include <algorithm>
 #include "imgui.h"
 #include "imgui_impl_win32.h"
@@ -334,10 +336,11 @@ int WINAPI wWinMain(HINSTANCE instance, HINSTANCE, PWSTR, int showCmd) {
     PWSTR documents = nullptr;
     if (SUCCEEDED(SHGetKnownFolderPath(FOLDERID_Documents, KF_FLAG_DEFAULT, nullptr, &documents))) {
         std::wstring defaultPath = std::wstring(documents) + L"\\AveroMotion Projects";
-        g_projectPath = WideToUtf8(defaultPath);
+        std::string defaultPathUtf8 = WideToUtf8(defaultPath);
+        strncpy_s(g_projectPath, sizeof(g_projectPath), defaultPathUtf8.c_str(), _TRUNCATE);
         CoTaskMemFree(documents);
     } else {
-        g_projectPath = "C:\\AveroMotion Projects";
+        strncpy_s(g_projectPath, sizeof(g_projectPath), "C:\\AveroMotion Projects", _TRUNCATE);
     }
     ShowWindow(hwnd, showCmd); UpdateWindow(hwnd);
     bool running = true;
