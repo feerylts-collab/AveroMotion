@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{fee2ea86-2463-411f-a02c-6282b0fcaa9c}</ProjectGuid>
+    <RootNamespace>AveroCore</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)Include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)Include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)Include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)Include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\Core\AveroCore.cpp" />
+    <ClCompile Include="Source\Core\AveroLog.cpp" />
+    <ClCompile Include="Source\Export\FFmpegVideoEncoder.cpp" />
+    <ClCompile Include="Source\Media\FFmpegDecoder.cpp" />
+    <ClCompile Include="Source\Media\FrameCache.cpp" />
+    <ClCompile Include="Source\Media\MediaEngine.cpp" />
+    <ClCompile Include="Source\Media\TestPatternDecoder.cpp" />
+    <ClCompile Include="Source\Playback\PlaybackController.cpp" />
+    <ClCompile Include="Source\Render\D3D11RenderBackend.cpp" />
+    <ClCompile Include="Source\Render\TimelineRenderer.cpp" />
+    <ClCompile Include="Source\Render\VideoPreviewRenderer.cpp" />
+    <ClCompile Include="Source\Timeline\VideoClip.cpp" />
+    <ClCompile Include="Source\Timeline\VideoTrack.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Include\Animation\AnimatableProperty.h" />
+    <ClInclude Include="Include\Animation\AnimationTrack.h" />
+    <ClInclude Include="Include\Animation\BezierEvaluator.h" />
+    <ClInclude Include="Include\Animation\BezierHandle.h" />
+    <ClInclude Include="Include\Animation\EasingFunctions.h" />
+    <ClInclude Include="Include\Animation\InterpolationTypes.h" />
+    <ClInclude Include="Include\Animation\Keyframe.h" />
+    <ClInclude Include="Include\Commands\CommandManager.h" />
+    <ClInclude Include="Include\Commands\ICommand.h" />
+    <ClInclude Include="Include\Composition\Composition.h" />
+    <ClInclude Include="Include\Core\AveroAssert.h" />
+    <ClInclude Include="Include\Core\AveroCore.h" />
+    <ClInclude Include="Include\Core\AveroLog.h" />
+    <ClInclude Include="Include\Core\AveroTypes.h" />
+    <ClInclude Include="Include\Core\Time.h" />
+    <ClInclude Include="Include\Effect\Effect.h" />
+    <ClInclude Include="Include\Effect\EffectParameter.h" />
+    <ClInclude Include="Include\Export\ExportEngine.h" />
+    <ClInclude Include="Include\Export\FFmpegVideoEncoder.h" />
+    <ClInclude Include="Include\Layer\Layer.h" />
+    <ClInclude Include="Include\Layer\LayerTypes.h" />
+    <ClInclude Include="Include\Layer\Transform.h" />
+    <ClInclude Include="Include\Mask\Mask.h" />
+    <ClInclude Include="Include\Math\Matrix4x4.h" />
+    <ClInclude Include="Include\Math\Quaternion.h" />
+    <ClInclude Include="Include\Math\Vector2.h" />
+    <ClInclude Include="Include\Math\Vector3.h" />
+    <ClInclude Include="Include\Math\Vector4.h" />
+    <ClInclude Include="Include\Media\FFmpegDecoder.h" />
+    <ClInclude Include="Include\Media\FrameCache.h" />
+    <ClInclude Include="Include\Media\IMediaDecoder.h" />
+    <ClInclude Include="Include\Media\MediaAsset.h" />
+    <ClInclude Include="Include\Media\MediaEngine.h" />
+    <ClInclude Include="Include\Media\MediaInfo.h" />
+    <ClInclude Include="Include\Media\MediaTypes.h" />
+    <ClInclude Include="Include\Media\TestPatternDecoder.h" />
+    <ClInclude Include="Include\Platform\PerformanceProfiler.h" />
+    <ClInclude Include="Include\Platform\Platform.h" />
+    <ClInclude Include="Include\Playback\PlaybackController.h" />
+    <ClInclude Include="Include\Project\Project.h" />
+    <ClInclude Include="Include\Render\CacheSystem.h" />
+    <ClInclude Include="Include\Render\D3D11RenderBackend.h" />
+    <ClInclude Include="Include\Render\RenderBackend.h" />
+    <ClInclude Include="Include\Render\RenderCommand.h" />
+    <ClInclude Include="Include\Render\RenderEngine.h" />
+    <ClInclude Include="Include\Render\RenderTarget.h" />
+    <ClInclude Include="Include\Render\RenderTypes.h" />
+    <ClInclude Include="Include\Render\Texture.h" />
+    <ClInclude Include="Include\Render\TimelineRenderer.h" />
+    <ClInclude Include="Include\Render\VideoPreviewRenderer.h" />
+    <ClInclude Include="Include\Scene\Camera.h" />
+    <ClInclude Include="Include\Scene\Light.h" />
+    <ClInclude Include="Include\Serialization\ISerializer.h" />
+    <ClInclude Include="Include\Shader\Shader.h" />
+    <ClInclude Include="Include\Timeline\Timeline.h" />
+    <ClInclude Include="Include\Timeline\VideoClip.h" />
+    <ClInclude Include="Include\Timeline\VideoTrack.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="x64\Debug\AveroCore.Build.CppClean.log" />
+    <Text Include="x64\Debug\AveroCore.log" />
+    <Text Include="x64\Debug\AveroCore.vcxproj.FileListAbsolute.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="x64\Debug\AveroCore.lib.recipe" />
+    <None Include="x64\Debug\AveroCore.tlog\AveroCore.lastbuildstate" />
+    <None Include="x64\Debug\AveroCore.tlog\CL.command.1.tlog" />
+    <None Include="x64\Debug\AveroCore.tlog\Cl.items.tlog" />
+    <None Include="x64\Debug\AveroCore.tlog\CL.read.1.tlog" />
+    <None Include="x64\Debug\AveroCore.tlog\CL.write.1.tlog" />
+    <None Include="x64\Debug\AveroCore.tlog\Lib-link.read.1.tlog" />
+    <None Include="x64\Debug\AveroCore.tlog\Lib-link.write.1.tlog" />
+    <None Include="x64\Debug\AveroCore.tlog\Lib.command.1.tlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="x64\Debug\AveroCore.obj" />
+    <Object Include="x64\Debug\AveroLog.obj" />
+    <Object Include="x64\Debug\D3D11RenderBackend.obj" />
+    <Object Include="x64\Debug\FFmpegDecoder.obj" />
+    <Object Include="x64\Debug\FFmpegVideoEncoder.obj" />
+    <Object Include="x64\Debug\FrameCache.obj" />
+    <Object Include="x64\Debug\MediaEngine.obj" />
+    <Object Include="x64\Debug\PlaybackController.obj" />
+    <Object Include="x64\Debug\TestPatternDecoder.obj" />
+    <Object Include="x64\Debug\TimelineRenderer.obj" />
+    <Object Include="x64\Debug\VideoClip.obj" />
+    <Object Include="x64\Debug\VideoPreviewRenderer.obj" />
+    <Object Include="x64\Debug\VideoTrack.obj" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
